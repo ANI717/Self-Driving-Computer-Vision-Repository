@@ -22,8 +22,8 @@ class ANI717Dataset(Dataset):
     
     def __getitem__(self, index):
         image = cv2.imread(os.path.join(self.root_dir, self.annotations.iloc[index, 0]))
-        servo = self.annotations.iloc[index, 1]*10
-        motor = self.annotations.iloc[index, 2]*10
+        servo = self.annotations.iloc[index, 1]
+        motor = self.annotations.iloc[index, 2]
         
         if self.transforms:
             return self.transforms(image=image)["image"], servo, motor

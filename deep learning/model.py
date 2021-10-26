@@ -24,7 +24,7 @@ class NvidiaNet(nn.Module):
             nn.Conv2d(48, 64, 3),
             nn.ELU(),
             nn.Conv2d(64, 64, 3),
-            nn.Dropout(0.25),
+            nn.Dropout(0.05),
         )
 
         self.flatsize = np.prod(self.features(torch.ones(1, 3, *shape)).size())

@@ -16,7 +16,7 @@ DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
 NUM_WORKERS = 1
 PIN_MEMORY = True
 
-IMG_SHAPE = (75, 100) # height, width
+IMG_SHAPE = (75, 75) # height, width
 IMG_CHANNELS = 3
 
 BATCH_SIZE = 256
@@ -34,6 +34,8 @@ WRITE_LOG = True
 
 CHECKPOINT = "checkpoint"
 OUTPUT = 'output'
+
+TOLERENCE = 1
 
 
 # Transformations

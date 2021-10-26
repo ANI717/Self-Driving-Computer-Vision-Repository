@@ -27,8 +27,8 @@ def main():
     # Load Data
     train_dataset = ANI717Dataset(config.TRAIN_CSV, config.IMG_SOURCE, transforms=config.train_transforms)
     val_dataset = ANI717Dataset(config.VAL_CSV, config.IMG_SOURCE, transforms=config.test_transforms)
-    train_loader = DataLoader(train_dataset, batch_size=config.BATCH_SIZE, shuffle=True)#, num_workers=config.NUM_WORKERS, pin_memory=config.PIN_MEMORY)
-    val_loader = DataLoader(val_dataset, batch_size=config.BATCH_SIZE, shuffle=False)#, num_workers=config.NUM_WORKERS, pin_memory=config.PIN_MEMORY)
+    train_loader = DataLoader(train_dataset, batch_size=config.BATCH_SIZE, shuffle=True, num_workers=config.NUM_WORKERS, pin_memory=config.PIN_MEMORY)
+    val_loader = DataLoader(val_dataset, batch_size=config.BATCH_SIZE, shuffle=False, num_workers=config.NUM_WORKERS, pin_memory=config.PIN_MEMORY)
     
     # Initialize Model, Optimizer and Loss
     model = NvidiaNet(in_channels=3).to(config.DEVICE)
@@ -50,8 +50,9 @@ def main():
     # import sys
     # sys.exit()
     
-    accuracy_holder = []
     loss_holder = []
+    accuracy_holder = []
+    best_epoch = []
     for epoch in range(config.NUM_EPOCHS):
         loop = tqdm(train_loader, position=0, leave=True)
         for batch_idx, (inputs, servo, motor) in enumerate(loop):
@@ -82,7 +83,7 @@ def main():
         
         # Write Log
         if config.WRITE_LOG:
-            write_log(epoch, accuracy_holder, loss_holder)
+            best_epoch = write_log(epoch, loss_holder, accuracy_holder, best_epoch)
         
         # Save Model
         if config.SAVE_MODEL:

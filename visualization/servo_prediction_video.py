@@ -7,10 +7,11 @@
 import os
 import cv2
 import math
+import onnxruntime as ort
 
 import config
 from model import NvidiaNet
-from utils import load_checkpoint, single_prediction
+from utils import load_checkpoint, single_prediction, single_prediction_onnx
 
 
 # Global Variables
@@ -68,6 +69,8 @@ def main():
     load_checkpoint(config.CHECKPOINT, model)
     model.eval()
     
+    ort_session = ort.InferenceSession("checkpoint/epoch_128.onnx")
+    
     for i in range(len(data)):
         image = cv2.imread(os.path.join(SOURCE_FOLDER, data[i]))
         if NEW_DATA:
@@ -76,6 +79,7 @@ def main():
             servo = int(data[i].split('_')[-2][1:])
 
         servo_pred = single_prediction(model, image)
+        servo_pred = single_prediction_onnx(ort_session, image)
         
         image = cv2.resize(image, (SHAPE[1], SHAPE[0]), interpolation=cv2.INTER_CUBIC)
     

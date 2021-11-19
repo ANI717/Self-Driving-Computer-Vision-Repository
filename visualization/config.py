@@ -5,6 +5,7 @@
 
 # Import Modules
 import torch
+import numpy as np
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
@@ -32,7 +33,7 @@ LOAD_MODEL = False
 SAVE_MODEL = True
 WRITE_LOG = True
 
-CHECKPOINT = "checkpoint/epoch_128"
+CHECKPOINT = "checkpoint/epoch_128.pth.tar"
 OUTPUT = 'output'
 
 TOLERENCE = 1
@@ -49,3 +50,19 @@ test_transforms = A.Compose([
     A.Resize(height=IMG_SHAPE[0], width=IMG_SHAPE[1]),
     A.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5], max_pixel_value=255.0,),
     ToTensorV2(),])
+
+
+# Functions
+def normalize(img, mean, std, max_pixel_value=255.0):
+    mean = np.array(mean, dtype=np.float32)
+    mean *= max_pixel_value
+
+    std = np.array(std, dtype=np.float32)
+    std *= max_pixel_value
+
+    denominator = np.reciprocal(std, dtype=np.float32)
+
+    img = img.astype(np.float32)
+    img -= mean
+    img *= denominator
+    return img

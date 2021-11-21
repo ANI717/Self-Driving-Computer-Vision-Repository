@@ -49,8 +49,8 @@ Self Driving CV Repository
     │   │   ├── model.py
     │   │   └── train.py
     │   └── test
-    │   │   ├── test.py
-    │   │   └── test_onnx.py
+    │       ├── test.py
+    │       └── test_onnx.py
     ├── results
     └── visualization
         ├── prediction_visualization.py

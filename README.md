@@ -56,3 +56,7 @@ Self Driving CV Repository
         ├── prediction_visualization.py
         └── prediction_video.py
 ```
+
+
+## Demonstration
+<img src="https://github.com/ANI717/ani717_gif_repository/blob/main/temple-race-car-deeplearning/prediction-1.gif" alt="prediction" class="inline"/><br/>

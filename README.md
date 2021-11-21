@@ -19,3 +19,40 @@ Computer Vision & Deep Learning Repository for Autonomous Driving of Jetson Nano
 * [Dr. Li Bai](https://engineering.temple.edu/about/faculty-staff/li-bai-lbai) (Academic Advisor)<br/>
 
 
+## Directory Tree (Important Scripts and Database)
+```
+Self Driving CV Repository
+    ├── data process
+    │   ├── output
+    │   ├── settings
+    │   ├── batch_rename.py
+    │   ├── create_dataset.py
+    │   ├── create_final_dataset.py
+    │   ├── refine_dataset.py
+    │   └── visually_refine_dataset.py
+    ├── dataset
+    │   ├── images
+    │   └── lists
+    │       ├── cross-validation
+    │       ├── debug
+    │       └── random
+    │           ├── train.csv
+    │           ├── val.csv
+    │           └── test.csv
+    ├── deep learning
+    │   ├── train
+    │   │   ├── checkpoints
+    │   │   ├── output
+    │   │   ├── config.py
+    │   │   ├── utils.py
+    │   │   ├── dataset.py
+    │   │   ├── model.py
+    │   │   └── train.py
+    │   └── test
+    │   │   ├── test.py
+    │   │   └── test_onnx.py
+    ├── results
+    └── visualization
+        ├── prediction_visualization.py
+        └── prediction_video.py
+```

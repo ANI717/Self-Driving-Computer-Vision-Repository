@@ -1,18 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""ANIMESH BALA ANI"""
+"""Neural Network Model.
 
-# Import Modules
+Neural Network Model Class in PyTorch.
+
+Revision History:
+        2021-11-20 (ANI717 - Animesh Bala Ani): Baseline Software.
+
+Example:
+        $ from model import NvidiaNet
+
+"""
+
+
+#___Import Modules:
 import numpy as np
 import torch
 import torch.nn as nn
 import config
 
 
-# NVidia Model Class
+#___Classes
 class NvidiaNet(nn.Module):
-    def __init__(self, in_channels=3, shape=config.IMG_SHAPE):
+    # NVidia Model Class
+    
+    def __init__(self, in_channels=config.IMG_SHAPE[0], shape=config.IMG_SHAPE[1:]):
         super().__init__()
         self.features = nn.Sequential(
             nn.Conv2d(in_channels, 24, 5, stride=2),
@@ -44,3 +57,8 @@ class NvidiaNet(nn.Module):
         x = self.classifier(x)
 
         return x
+
+
+#                                                                              
+# end of file
+"""ANI717"""

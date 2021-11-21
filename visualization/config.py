@@ -1,68 +1,69 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""ANIMESH BALA ANI"""
+"""Config File.
 
-# Import Modules
+Contains Hyperparameters and Transformations.
+
+Revision History:
+        2021-11-20 (ANI717 - Animesh Bala Ani): Baseline Software.
+
+Example:
+        $ import config
+
+"""
+
+
+#___Import Modules:
 import torch
-import numpy as np
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 
-# Hyperparameters
-TRAIN_TYPE = 'servo'
+#___Hyperparameters:
+TRAIN_TYPE = 'z'
 
-DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 NUM_WORKERS = 1
 PIN_MEMORY = True
 
-IMG_SHAPE = (75, 75) # height, width
-IMG_CHANNELS = 3
+IMG_SHAPE = (3, 75, 75) # channels, rows, columns
 
-BATCH_SIZE = 256
+BATCH_SIZE = 64
 LEARNING_RATE = 1e-4
 NUM_EPOCHS = 150
 
-IMG_SOURCE = '../dataset/images'
-TRAIN_CSV = '../dataset/train.csv'
-TEST_CSV = '../dataset/test.csv'
-VAL_CSV = '../dataset/val.csv'
+IMG_SOURCE = '../../dataset/images'
+TRAIN_CSV = '../../dataset/lists/random/train.csv'
+TEST_CSV = '../../dataset/lists/random/test.csv'
+VAL_CSV = '../../dataset/lists/random/val.csv'
 
-LOAD_MODEL = False
+LOAD_MODEL = True
 SAVE_MODEL = True
 WRITE_LOG = True
+SAVE_ONNX = True
 
-CHECKPOINT = "checkpoint/epoch_128.pth.tar"
-OUTPUT = 'output'
+CHECKPOINT_DIR = "checkpoints"
+OUTPUT_DIR = 'output'
+MODEL_FILE = "checkpoints/epoch_36.pth.tar"
+ONNX_MODEL_FILE = "checkpoints/epoch_36.onnx"
 
-TOLERENCE = 1
+ERROR_TOLERENCE = 0.1
 
 
-# Transformations
-train_transforms = A.Compose([
-    A.Resize(height=IMG_SHAPE[0], width=IMG_SHAPE[1]),
+#___Transformations
+TRAIN_TRANSFORMS = A.Compose([
+    A.Resize(height=IMG_SHAPE[1], width=IMG_SHAPE[2]),
     A.ColorJitter(p=0.2),
     A.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5], max_pixel_value=255.0,),
     ToTensorV2(),])
 
-test_transforms = A.Compose([
-    A.Resize(height=IMG_SHAPE[0], width=IMG_SHAPE[1]),
+TEST_TRANSFORMS = A.Compose([
+    A.Resize(height=IMG_SHAPE[1], width=IMG_SHAPE[2]),
     A.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5], max_pixel_value=255.0,),
     ToTensorV2(),])
 
 
-# Functions
-def normalize(img, mean, std, max_pixel_value=255.0):
-    mean = np.array(mean, dtype=np.float32)
-    mean *= max_pixel_value
-
-    std = np.array(std, dtype=np.float32)
-    std *= max_pixel_value
-
-    denominator = np.reciprocal(std, dtype=np.float32)
-
-    img = img.astype(np.float32)
-    img -= mean
-    img *= denominator
-    return img
+#                                                                              
+# end of file
+"""ANI717"""
